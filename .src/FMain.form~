@@ -1,0 +1,29 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,40)
+  { sort Button
+    MoveScaled(5,7,11,4)
+    Text = ("sort")
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(4,19,18,3)
+    Text = ("urdu index input file")
+  }
+  { TextBox1 TextBox
+    MoveScaled(1,23,23,4)
+    Text = ("electronicsLatex.urd")
+  }
+  { btnExit Button
+    MoveScaled(35,31,14,5)
+    Text = ("btnExit")
+  }
+  { Label1 Label
+    MoveScaled(3,32,18,3)
+    Text = ("electronicsLatex.srt")
+  }
+  { Label2 Label
+    MoveScaled(3,29,16,3)
+    Text = ("sorted file name")
+  }
+}

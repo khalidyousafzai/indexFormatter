@@ -1,0 +1,603 @@
+' Gambas class file
+
+Public hFileR As File
+Public hFileW As File
+
+
+Public sLine As String
+Public sLineS As String
+
+Public fitem As Boolean
+Public fsubitem As Boolean
+Public findexspace As Boolean
+Public fcompare As Boolean
+Public fend As Boolean
+
+Public sortstring As String
+Public weight As String
+Public reject As String
+Public path As String
+Public newLetter As String
+
+
+Public indexArray As New String[1000]
+Public subIndexArray As New String[40]
+Public num As Integer
+
+
+
+Public Sub form_Activate()
+ Dim i As Integer
+
+num = 0
+path = "/home/khalid/Desktop/sorting/"
+  
+sortstring = "آابپتٹثجچحخدڈذرڑزژسشصضطظعغفقکگلمنںوؤہھءئیے"
+
+
+For i = 0 To 999
+indexArray[i] = ""
+Next
+
+
+
+End
+
+Public Sub btnExit_Click()
+'  hFileR.Close
+  Me.Close
+
+End
+
+
+'==============================
+
+Public Sub checkLineA() As String
+
+  checkLine
+  If findexspace = True Then
+  checkLine
+  Else
+  Endif
+  
+  If sLine = "end" Then
+  fend = True
+  Else
+  fend = False
+  
+  Endif
+  
+End
+
+
+
+
+
+
+
+Public Sub checkLine() As String
+  
+  fitem = False
+  fsubitem = False
+  findexspace = False
+  
+  Line Input #hFileR, sLine
+   sLine = LTrim$(sLine)
+   sLineS = String.Left(LTrim$(String.Right(sLine, string.Len(sLine) - 5)), 1) 'used only if item
+  
+  
+  If String.InStr(sLine, "subitem") <> 0 Then
+    fsubitem = True
+    Else
+      If String.InStr(sLine, "item") <> 0 Then
+      fitem = True
+      Endif
+  
+  Endif
+  
+  
+    If String.InStr(sLine, "indexspace") <> 0 Then
+    findexspace = True
+    Endif
+    
+
+End
+
+'=====================================================
+
+Public Sub makeLine()
+  Dim string1, string2 As String
+  Dim n, i As Integer
+  Dim sOneLine As String
+
+  i = 0
+ 
+ hFileW = Open path & "electronicsLatex.srt" For Write Create
+'  hFileR = OPEN path & "electronicsLatex.urd" FOR READ 
+
+hFileR = Open TextBox1.text For Read          'this is the actual input index file
+
+ sOneLine = ""
+ 
+ 
+ 'first line
+ 
+ Line Input #hFileR, sLine
+   sLine = LTrim$(sLine)
+If String.InStr(sLine, "end") <> 0 Then     'found end of file so stop reading it further
+Goto stopReading
+Endif
+
+ If string.InStr(sLine, "\\item ") <> 0 Then 'even though first line is \item still better to check it
+  sOneLine = sLine
+  Endif
+ 
+ 'lines that follow
+ tillEnd:
+  
+  
+  Line Input #hFileR, sLine
+   sLine = LTrim$(sLine)
+If String.InStr(sLine, "end") <> 0 Then     'print the last line too
+Goto stopReading
+Endif
+
+If String.InStr(sLine, "indexspace") <> 0 Then     'print the last line too
+Goto tillEnd
+Endif
+
+If emptyline(sLine) = True Then
+Goto tillEnd
+Endif
+
+If sLine = "" Then
+Goto tillEnd
+Endif
+
+
+'   sLineS = String.Left(LTrim$(String.Right(sLine, string.Len(sLine) - 5)), 1) 'used only if item
+  
+  If string.InStr(sLine, "\\item ") <> 0 Then
+  indexArray[i] = sOneLine
+  i = i + 1
+  
+   Print #hFileW, sOneLine
+  sOneLine = sLine
+  Else
+  sOneLine = sOneLine & sLine
+  Endif
+
+    
+Goto tillEnd
+
+stopReading:
+
+ indexArray[i] = sOneLine
+ Print #hFileW, sOneLine
+ 
+ Print #hFileW, "end"
+
+Close hFileW
+Close hFileR
+
+End
+
+
+Public Sub bubble(iStart As Integer, iEnd As Integer)
+
+  Dim string1, string2, stringx, string3 As String
+  Dim i, j, k, m, n As Integer
+  
+
+  
+
+  For i = iStart To iEnd
+  For j = i To iEnd
+  
+  string1 = indexArray[i]
+  
+  'select item only  
+  m = string.InStr(string1, "\\subitem")
+  n = string.InStr(string1, ",")
+  
+  If m <> 0 Then                      'subitem may not be present at all so watch out
+  If n < m Then
+  n = n - 1                           'n is end of string
+  Else
+  n = m - 1
+  Endif
+  Endif
+ 
+  string1 = string.Mid(string1, 7, n - 7)
+'-----------
+string2 = indexArray[j]
+'select item only
+  
+  m = string.InStr(string2, "\\subitem")
+  n = string.InStr(string2, ",")
+  
+  If m <> 0 Then
+  If n < m Then
+  n = n - 1                           'n is end of string
+  Else
+  n = m - 1
+  Endif
+  Endif
+ 
+  string2 = string.Mid(string2, 7, n - 7)
+'------------------
+
+If exchangeNeeded(string1, string2) = True Then
+
+string3 = indexArray[i]
+indexArray[i] = indexArray[j]
+indexArray[j] = string3
+Endif
+
+  
+  Next
+  Next
+  
+End
+
+
+
+
+
+
+
+Public Sub sortSubIndexEntries()
+Dim string1, string3 As String
+Dim n, i, j, k, l, m As Integer
+
+
+For i = 0 To 299
+
+string1 = indexArray[i]
+
+If string.InStr(string1, "\\subitem") = 0 Then  'could be only index entry with no sub entries
+Goto endReachedA
+Endif
+
+
+
+j = 1
+'handle main index entry first
+n = 0
+
+k = string.InStr(string1, "\\subitem")
+subIndexArray[n] = string.Mid(string1, j, k - 1)     'array's first part holds the item
+j = k                             'j points to \ of \subindex
+n = n + 1                               'these would hold subindex entries
+
+'this section deals subindex entries
+
+tillEnd:
+
+k = string.InStr(string1, "\\subitem", j + 2)
+If k = 0 Then
+  subIndexArray[n] = string.mid(string1, j, string.Len(string1) - j + 1)
+  Goto endReached             'this was the last subindex entry
+Else
+
+  subIndexArray[n] = string.Mid(string1, j, k - j)
+  j = k
+  n = n + 1
+  Goto tillEnd
+Endif
+  
+
+
+endReached:
+
+'now sort subindex entries
+
+  For l = 1 To n
+  For m = l To n
+
+If exchangeNeeded(subIndexArray[l], subIndexArray[m]) = True Then
+string3 = subIndexArray[m]
+subIndexArray[m] = subIndexArray[l]
+subIndexArray[l] = string3
+Endif
+  
+  Next
+  Next
+  
+  'and rewrite them into the main index array
+  indexArray[i] = ""
+  For m = 0 To n
+  indexArray[i] = indexArray[i] & subIndexArray[m]
+  Next
+  
+endReachedA:
+
+Next
+
+
+hFileW = Open path & "electronicsLatex.URD" For Write Create
+
+newLetter = "آ"            'to write \indexspace at each change of first letter
+
+For i = 0 To 299                  'remove empty spaces
+If indexArray[i] = "" Then
+Goto skipThisData
+Endif
+
+If indexArray[i] = "\\indexspace" Then  'also remove redundant \indexspace commands
+Goto skipThisData
+Endif
+
+If emptyline(indexArray[i]) = True Then
+Goto skipThisData
+Endif
+
+
+
+
+      If string.Mid(indexArray[i], 7, 1) = newLetter Then
+        indexArray[i] = Replace$(indexArray[i], ",", "،")
+        indexArray[i] = Replace$(indexArray[i], "\\subitem", "\n" & "   \\subitem")
+      Print #hFileW, indexArray[i]
+    Else
+      Print #hFileW, "\\indexspace"
+        indexArray[i] = Replace$(indexArray[i], ",", "،")
+        indexArray[i] = Replace$(indexArray[i], "\\subitem", "\n" & "   \\subitem")
+      Print #hFileW, indexArray[i]
+      newLetter = string.Mid(indexArray[i], 7, 1)
+    Endif
+    
+skipThisData:
+Next
+
+Print #hFileW, "end"
+Close #hFileW
+
+End
+
+
+'==============================
+Public Sub exchangeNeeded(string1 As String, string2 As String) As Boolean
+Dim n, i, j, k, l, m, p, s As Integer
+Dim stringA, stringB, stringx, stringy As String
+
+
+'--------------------------------------------
+'reject zbr, zer, pesh, spaces
+
+stringx = ""
+k = string.Len(string1)
+
+For n = 1 To k
+  stringy = string.Mid(string1, n, 1)
+  If string.InStr(sortstring, stringy) <> 0 Then
+  stringx = stringx & stringy
+  Endif
+Next
+string1 = stringx
+
+stringx = ""
+k = string.Len(string2)
+
+For n = 1 To k
+  stringy = string.Mid(string2, n, 1)
+  If string.InStr(sortstring, stringy) <> 0 Then
+  stringx = stringx & stringy
+  Endif
+Next
+ string2 = stringx
+
+
+'-------------------------------------
+'stuf spaces at end of shorter string to make the two of equal length
+
+k = string.Len(string1)
+l = string.Len(string2)
+
+If k < l Then             'select the shorter string
+s = k
+Else
+s = l
+Endif
+
+
+'------------------------------------
+'actual compare
+
+n = 0
+
+tillEnd:
+
+  n = n + 1
+  If n > s Then
+  Goto stopReadingA
+  Endif
+  
+  stringA = string.Mid(string1, n, 1)
+  stringB = string.Mid(string2, n, 1)
+  
+  
+  i = string.InStr(sortstring, stringA)
+  j = string.InStr(sortstring, stringB)
+  
+  If j < i Then
+  Return True
+  Goto stopReading
+  Endif
+  
+  If j > i Then
+  Return False
+  Goto stopReading
+  Endif
+  
+  Goto tillEnd
+  
+ stopReadingA:
+  
+  If string.Len(string2) < string.Len(string1) Then
+  Return True
+  Else
+  Return False
+  Endif
+  
+  stopReading:
+  
+End
+'==================================
+
+
+
+
+
+
+
+
+Public Sub writeToFile()
+  Dim i As Integer
+  
+  
+hFileW = Open path & "electronicsLatex.URD" For Write Create
+
+For i = 0 To 299
+Print #hFileW, indexArray[i]
+Next
+
+Print #hFileW, "end"
+Close #hFileW
+  
+End
+
+
+Public Sub leftRight()
+  Dim i, j, k, l, pageStart, pageEnd As Integer
+  
+  
+  For i = 0 To 999
+  indexArray[i] = ""
+  Next
+  
+  
+  hFileR = Open path & "electronicsLatex.URD" For Read
+  
+  i = 0
+  
+  tillEnd:
+  
+  Line Input #hFileR, sLine
+  
+  If sLine = "end" Then
+  Goto stopReading
+  Endif
+  
+  indexArray[i] = sLine
+  i = i + 1                     'i holds the total lines written
+  Goto tillEnd
+  
+  stopReading:
+  
+  Close #hFileR
+  
+
+'-------------------------
+
+hFileW = Open path & "indexFormatter.ind" For Write Create
+
+k = 0
+j = 0
+
+tillEndA:
+
+    pageStart = 40 * (j + 1)                    'right page
+     pageEnd = pageStart + 39
+     
+For l = pageStart To pageEnd
+    Print #hFileW, indexArray[l]
+k = k + 1
+    
+    If k > i Then
+    Goto stopReadingA
+    Endif
+    
+Next
+    
+    Print #hFileW, ""
+    Print #hFileW, "\\newpage"
+    Print #hFileW, ""
+    
+    pageStart = 40 * j                            'left page
+    pageEnd = pageStart + 39
+     
+For l = pageStart To pageEnd
+    Print #hFileW, indexArray[l]
+     k = k + 1
+    
+    If k > i Then
+    Goto stopReadingA
+    Endif
+    
+Next
+    
+    Print #hFileW, ""
+    Print #hFileW, "\\newpage"
+    Print #hFileW, ""
+    
+j = j + 2
+ 
+ 
+Goto tillEndA
+
+stopReadingA:
+ 
+Close #hFileW
+  
+End
+
+
+
+Public Sub sort_Click()
+Dim i, s As Integer
+
+For i = 0 To 999           'clear array
+indexArray[i] = ""
+Next
+
+
+  makeLine
+  bubble(0, 299)
+  sortSubIndexEntries
+  leftRight
+
+End
+
+
+Public Sub emptyline(string1 As String) As Boolean
+  Dim i As Integer
+  Dim stringA As String
+   
+  
+  
+  For i = 1 To string.Len(string1)
+  stringA = string.Mid(string1, i, 1)
+      If string.InStr(sortstring, stringA) <> 0 Then
+      Return False
+      Goto stopReading
+      Endif
+  Next
+  
+  Return True
+  
+  
+  stopReading:
+End
+
+Public Sub Form_Open()
+
+  
+
+End
+
+Public Sub Label1_MouseDown()
+
+  
+
+End
