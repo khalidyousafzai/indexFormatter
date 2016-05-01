@@ -500,7 +500,7 @@ Public Sub leftRight()
 
 '-------------------------
 
-hFileW = Open path & "indexFormatterTemp2.ind" For Write Create
+hFileW = Open path & "indexFormatterTemp.ind" For Write Create
 
 k = 0
 j = 0

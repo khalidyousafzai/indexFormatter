@@ -47,31 +47,35 @@
     Text = ("temporary files are as follows")
   }
   { Label7 Label
-    MoveScaled(52,6,21,4)
-    Text = ("makeindex filename.idx")
-  }
-  { Label8 Label
-    MoveScaled(52,3,4,4)
-    Text = ("run")
+    MoveScaled(53,4,24,4)
+    Text = ("run makeindex filename.idx")
   }
   { Label9 Label
-    MoveScaled(52,10,22,2)
+    MoveScaled(53,8,22,2)
     Text = ("to generate filename.ind")
   }
   { Label10 Label
-    MoveScaled(52,13,21,2)
+    MoveScaled(53,11,21,2)
     Text = ("copy the urdu section to")
   }
   { Label11 Label
-    MoveScaled(52,15,12,3)
+    MoveScaled(62,13,12,3)
     Text = ("filename.urd")
   }
   { Label12 Label
-    MoveScaled(50,18,30,2)
+    MoveScaled(49,16,30,2)
     Text = ("ending the file with the word  end")
   }
   { Label13 Label
-    MoveScaled(51,20,16,4)
-    Text = ("and then run   sort")
+    MoveScaled(49,18,26,4)
+    Text = ("and then run   sort to generate")
+  }
+  { Label8 Label
+    MoveScaled(53,1,24,3)
+    Text = ("remove \\RL, urdufont, {{, }}")
+  }
+  { Label14 Label
+    MoveScaled(65,21,11,3)
+    Text = ("output.URD")
   }
 }

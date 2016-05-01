@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,50,47)
+  MoveScaled(0,0,78,53)
   { sort Button
     MoveScaled(5,2,11,4)
     Text = ("sort")
@@ -45,5 +45,33 @@
   { Label6 Label
     MoveScaled(6,37,26,3)
     Text = ("temporary files are as follows")
+  }
+  { Label7 Label
+    MoveScaled(53,4,24,4)
+    Text = ("run makeindex filename.idx")
+  }
+  { Label9 Label
+    MoveScaled(53,8,22,2)
+    Text = ("to generate filename.ind")
+  }
+  { Label10 Label
+    MoveScaled(53,11,21,2)
+    Text = ("copy the urdu section to")
+  }
+  { Label11 Label
+    MoveScaled(62,13,12,3)
+    Text = ("filename.urd")
+  }
+  { Label12 Label
+    MoveScaled(49,16,30,2)
+    Text = ("ending the file with the word  end")
+  }
+  { Label13 Label
+    MoveScaled(49,18,16,4)
+    Text = ("and then run   sort")
+  }
+  { Label8 Label
+    MoveScaled(53,1,24,3)
+    Text = ("remove \\RL, urdufont, {{, }}")
   }
 }

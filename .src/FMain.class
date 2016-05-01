@@ -115,7 +115,7 @@ Public Sub makeLine()
  hFileW = Open path & "indexFormatterTemp.srt" For Write Create
 '  hFileR = OPEN path & "electronicsLatex.urd" FOR READ 
 
-hFileR = Open TextBox1.text For Read          'this is the actual input index file
+hFileR = Open path & TextBox1.text For Read          'this is the actual input index file
 
  sOneLine = ""
  
