@@ -30,7 +30,7 @@ Public Sub form_Activate()
  Dim i As Integer
 
 num = 0
-path = "/home/khalid/Desktop/sorting/"
+'path = "/home/khalid/Desktop/sorting/"
   
 sortstring = "آابپتٹثجچحخدڈذرڑزژسشصضطظعغفقکگلمنںوؤہھءئیے"
 
@@ -112,7 +112,7 @@ Public Sub makeLine()
 
   i = 0
  
- hFileW = Open path & "electronicsLatex.srt" For Write Create
+ hFileW = Open path & "indexFormatterTemp.srt" For Write Create
 '  hFileR = OPEN path & "electronicsLatex.urd" FOR READ 
 
 hFileR = Open TextBox1.text For Read          'this is the actual input index file
@@ -315,7 +315,7 @@ endReachedA:
 Next
 
 
-hFileW = Open path & "electronicsLatex.URD" For Write Create
+hFileW = Open path & "output.URD" For Write Create
 
 newLetter = "آ"            'to write \indexspace at each change of first letter
 
@@ -456,7 +456,7 @@ Public Sub writeToFile()
   Dim i As Integer
   
   
-hFileW = Open path & "electronicsLatex.URD" For Write Create
+hFileW = Open path & "output.URD" For Write Create
 
 For i = 0 To 299
 Print #hFileW, indexArray[i]
@@ -477,7 +477,7 @@ Public Sub leftRight()
   Next
   
   
-  hFileR = Open path & "electronicsLatex.URD" For Read
+  hFileR = Open path & "output.URD" For Read
   
   i = 0
   
@@ -500,7 +500,7 @@ Public Sub leftRight()
 
 '-------------------------
 
-hFileW = Open path & "indexFormatter.ind" For Write Create
+hFileW = Open path & "indexFormatterTemp.ind" For Write Create
 
 k = 0
 j = 0
@@ -557,6 +557,8 @@ End
 Public Sub sort_Click()
 Dim i, s As Integer
 
+path = TextBox2.Text
+
 For i = 0 To 999           'clear array
 indexArray[i] = ""
 Next
@@ -597,6 +599,18 @@ Public Sub Form_Open()
 End
 
 Public Sub Label1_MouseDown()
+
+  
+
+End
+
+Public Sub TextBox1_KeyPress()
+
+  
+
+End
+
+Public Sub TextLabel1_MouseDown()
 
   
 

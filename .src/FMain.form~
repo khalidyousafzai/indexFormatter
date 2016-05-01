@@ -1,17 +1,17 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,50,40)
+  MoveScaled(0,0,50,47)
   { sort Button
-    MoveScaled(5,7,11,4)
+    MoveScaled(5,2,11,4)
     Text = ("sort")
   }
   { TextLabel1 TextLabel
-    MoveScaled(4,19,18,3)
+    MoveScaled(5,20,18,3)
     Text = ("urdu index input file")
   }
   { TextBox1 TextBox
-    MoveScaled(1,23,23,4)
+    MoveScaled(4,23,40,4)
     Text = ("electronicsLatex.urd")
   }
   { btnExit Button
@@ -20,10 +20,30 @@
   }
   { Label1 Label
     MoveScaled(3,32,18,3)
-    Text = ("electronicsLatex.srt")
+    Text = ("output.URD")
   }
   { Label2 Label
     MoveScaled(3,29,16,3)
     Text = ("sorted file name")
+  }
+  { TextBox2 TextBox
+    MoveScaled(4,12,41,4)
+    Text = ("/home/khalid/Desktop/sorting/")
+  }
+  { Label3 Label
+    MoveScaled(5,9,24,3)
+    Text = ("path to location of input file")
+  }
+  { Label4 Label
+    MoveScaled(9,40,21,4)
+    Text = ("indexFormatterTemp.srt")
+  }
+  { Label5 Label
+    MoveScaled(9,44,20,2)
+    Text = ("indexFormatter.ind")
+  }
+  { Label6 Label
+    MoveScaled(6,37,26,3)
+    Text = ("temporary files are as follows")
   }
 }
