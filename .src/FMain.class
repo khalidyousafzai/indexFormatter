@@ -20,7 +20,7 @@ Public path As String
 Public newLetter As String
 
 
-Public indexArray As New String[1000]
+Public indexArray As New String[10000]
 Public subIndexArray As New String[40]
 Public num As Integer
 
@@ -35,7 +35,7 @@ num = 0
 sortstring = "آابپتٹثجچحخدڈذرڑزژسشصضطظعغفقکگلمنںوؤہھءئیے"
 
 
-For i = 0 To 999
+For i = 0 To 9999
 indexArray[i] = ""
 Next
 
@@ -251,7 +251,7 @@ Dim string1, string3 As String
 Dim n, i, j, k, l, m As Integer
 
 
-For i = 0 To 299
+For i = 0 To 9999
 
 string1 = indexArray[i]
 
@@ -319,7 +319,7 @@ hFileW = Open path & "output.URD" For Write Create
 
 newLetter = "آ"            'to write \indexspace at each change of first letter
 
-For i = 0 To 299                  'remove empty spaces
+For i = 0 To 9999            'remove empty spaces
 If indexArray[i] = "" Then
 Goto skipThisData
 Endif
@@ -458,7 +458,7 @@ Public Sub writeToFile()
   
 hFileW = Open path & "output.URD" For Write Create
 
-For i = 0 To 299
+For i = 0 To 9999
 Print #hFileW, indexArray[i]
 Next
 
@@ -472,7 +472,7 @@ Public Sub leftRight()
   Dim i, j, k, l, pageStart, pageEnd As Integer
   
   
-  For i = 0 To 999
+  For i = 0 To 9999
   indexArray[i] = ""
   Next
   
@@ -559,7 +559,7 @@ Dim i, s As Integer
 
 path = TextBox2.Text
 
-For i = 0 To 999           'clear array
+For i = 0 To 9999           'clear array
 indexArray[i] = ""
 Next
 

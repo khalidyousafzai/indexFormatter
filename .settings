@@ -12,9 +12,10 @@ SearchComment=False
 SearchString=True
 
 [OpenFile]
-Active=1
 File[1]=".src/FMain.form"
-File[2]=".src/FMain.class:117.21"
+Active=2
+File[2]=".src/FMain.class:28.26"
+Fold[2]=[54,77]
 Count=2
 
 [Watches]
